@@ -28,7 +28,6 @@ public class VehicleType {
     private Long id;
 
     @NotEmpty(message = "La descripcion es obligatoria.")
-    @Max(value = 50, message = "La descripcion no puede tener mas de 50 caracteres.")
     @Column(name = "description", nullable = false)
     private String description;
 }
