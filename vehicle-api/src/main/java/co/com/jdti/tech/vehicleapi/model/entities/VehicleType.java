@@ -21,13 +21,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "vehicle_type")
 public class VehicleType {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @NotEmpty(message = "La descripcion es obligatoria.")
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, unique = true)
     private String description;
 }
