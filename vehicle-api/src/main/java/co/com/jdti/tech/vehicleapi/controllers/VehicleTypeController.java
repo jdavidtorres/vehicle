@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin({ "*" })
-@RequestMapping("/vehicle")
+@RequestMapping("/vehicle-type")
 @RequiredArgsConstructor
 public class VehicleTypeController {
 
