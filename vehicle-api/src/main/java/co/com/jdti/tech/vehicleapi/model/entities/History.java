@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,22 +22,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "procedures")
-public class Procedure {
+@Table(name = "document_type")
+public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @NotEmpty(message = "La descripcion es obligatoria.")
-    @Column(name = "description", nullable = false, unique = true)
-    private String description;
-
-    @Column(name = "price", nullable = false)
-    private Double price;
-
     @JsonIgnore
-    @OneToMany(mappedBy = "procedure")
+    @OneToMany(mappedBy = "history")
     private List<Detail> details;
 }

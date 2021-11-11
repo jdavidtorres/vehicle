@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "procedures")
-public class Procedure {
+@Table(name = "brand")
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +35,7 @@ public class Procedure {
     @Column(name = "description", nullable = false, unique = true)
     private String description;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
-
     @JsonIgnore
-    @OneToMany(mappedBy = "procedure")
-    private List<Detail> details;
+    @OneToMany(mappedBy = "brand")
+    private List<Vehicle> vehicles;
 }
