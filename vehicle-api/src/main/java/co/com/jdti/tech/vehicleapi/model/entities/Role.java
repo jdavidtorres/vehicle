@@ -1,5 +1,6 @@
 package co.com.jdti.tech.vehicleapi.model.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,4 +34,11 @@ public class Role {
 
     @OneToMany(mappedBy = "role")
     List<UserEntity> users;
+
+    public void addUserToRole(UserEntity user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        this.users.add(user);
+    }
 }
