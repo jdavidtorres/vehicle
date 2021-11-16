@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import co.com.jdti.tech.vehicleapi.enums.UserType;
 import co.com.jdti.tech.vehicleapi.model.entities.Brand;
 import co.com.jdti.tech.vehicleapi.model.entities.DocumentType;
 import co.com.jdti.tech.vehicleapi.model.entities.Procedure;
@@ -13,6 +14,7 @@ import co.com.jdti.tech.vehicleapi.repositories.IBrandRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IDocumentTypeRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IProcedureRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IVehicleTypeRepository;
+import co.com.jdti.tech.vehicleapi.services.IUserServices;
 
 @SpringBootApplication
 public class VehicleApiApplication implements CommandLineRunner {
@@ -28,6 +30,9 @@ public class VehicleApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private IProcedureRepository iProcedureRepository;
+
+	@Autowired
+	private IUserServices iUserServices;
 
 	public static void main(String[] args) {
 		SpringApplication.run(VehicleApiApplication.class, args);
@@ -82,5 +87,9 @@ public class VehicleApiApplication implements CommandLineRunner {
 		iProcedureRepository.save(Procedure.builder().description("Aceite hidráulico").price(10000.0).build());
 		iProcedureRepository.save(Procedure.builder().description("Kit de arrastre").price(1000000.0).build());
 		iProcedureRepository.save(Procedure.builder().description("Accesorios").price(1000.0).build());
+
+		iUserServices.checkRoleUser(UserType.Admin.name());
+		iUserServices.checkRoleUser(UserType.User.name());
+
 	}
 }
