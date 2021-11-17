@@ -10,7 +10,7 @@ public interface IUserServices {
 
     public void checkRoleUser(String roleName);
 
-    public void addUserToRole(UserEntity user, String role);
+    public void addUserToRole(UserEntity user, String roleName);
 
-    public Boolean isUserInRole(UserEntity user, String role);
+    public Boolean isUserInRole(UserEntity user, String roleName);
 }

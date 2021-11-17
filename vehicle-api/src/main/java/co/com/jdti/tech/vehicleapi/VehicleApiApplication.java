@@ -9,6 +9,7 @@ import co.com.jdti.tech.vehicleapi.enums.UserType;
 import co.com.jdti.tech.vehicleapi.model.entities.Brand;
 import co.com.jdti.tech.vehicleapi.model.entities.DocumentType;
 import co.com.jdti.tech.vehicleapi.model.entities.Procedure;
+import co.com.jdti.tech.vehicleapi.model.entities.UserEntity;
 import co.com.jdti.tech.vehicleapi.model.entities.VehicleType;
 import co.com.jdti.tech.vehicleapi.repositories.IBrandRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IDocumentTypeRepository;
@@ -50,7 +51,8 @@ public class VehicleApiApplication implements CommandLineRunner {
 		iVehicleTypeRepository.save(VehicleType.builder().description("Bus").build());
 
 		iDocumentTypeRepository.save(DocumentType.builder().description("Pasaporte").build());
-		iDocumentTypeRepository.save(DocumentType.builder().description("Cédula de ciudadanía").build());
+		DocumentType cc = iDocumentTypeRepository
+				.save(DocumentType.builder().description("Cédula de ciudadanía").build());
 		iDocumentTypeRepository.save(DocumentType.builder().description("Cédula de extranjería").build());
 		iDocumentTypeRepository.save(DocumentType.builder().description("Tarjeta de identidad").build());
 		iDocumentTypeRepository.save(DocumentType.builder().description("NIT").build());
@@ -91,5 +93,16 @@ public class VehicleApiApplication implements CommandLineRunner {
 		iUserServices.checkRoleUser(UserType.Admin.name());
 		iUserServices.checkRoleUser(UserType.User.name());
 
+		UserEntity userAdmin = iUserServices.addUser(
+				UserEntity.builder().firstName("Juan").lastName("Perez").email("juan@yopmail.com").password("12345")
+						.documentType(cc).documentNumber("documentNumber").address("Avenue 745").build());
+
+		iUserServices.addUserToRole(userAdmin, UserType.Admin.name());
+
+		UserEntity userUser = iUserServices.addUser(
+				UserEntity.builder().firstName("Luis").lastName("Fulano").email("luis@yopmail.com").password("1234567")
+						.documentType(cc).documentNumber("documentNumber").address("Avenue 747").build());
+
+		iUserServices.addUserToRole(userUser, UserType.User.name());
 	}
 }

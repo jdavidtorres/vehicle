@@ -2,8 +2,6 @@ package co.com.jdti.tech.vehicleapi.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import co.com.jdti.tech.vehicleapi.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,12 +49,8 @@ public class UserEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "photo", nullable = false)
+    @Column(name = "photo")
     private String photo;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_type", nullable = false)
-    private UserType userType;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
