@@ -1,8 +1,12 @@
 package co.com.jdti.tech.vehicleapi.services;
 
+import java.util.ArrayList;
+
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +22,13 @@ public class UserServicesImpl implements IUserServices, UserDetailsService {
 
     private final IUserRepository iUserRepository;
     private final IRoleRepository iRoleRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        UserEntity userLoaded = iUserRepository.findByEmail(username);
+        return new User(userLoaded.getEmail(), userLoaded.getPassword(), true, true, true, true, new ArrayList<>());
     }
 
     @Transactional(readOnly = true)
@@ -34,6 +40,7 @@ public class UserServicesImpl implements IUserServices, UserDetailsService {
     @Transactional
     @Override
     public UserEntity addUser(UserEntity user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         return iUserRepository.save(user);
     }
 
