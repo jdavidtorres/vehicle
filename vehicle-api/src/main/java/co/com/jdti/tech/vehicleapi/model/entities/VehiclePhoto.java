@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,15 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "vehicle")
-public class Vehicle {
+@Table(name = "vehicle_photos")
+public class VehiclePhoto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,25 +28,13 @@ public class Vehicle {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_type_id")
-    private VehicleType vehicleType;
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+    @Column(name = "photo")
+    private String photo;
 
-    @Range(min = 1900, max = 3000)
-    private int model;
-
-    @Pattern(regexp = "[a-zA-Z]{3}[0-9]{2}[a-zA-Z0-9]")
-    @Column(unique = true)
-    private String plaque;
-
-    private String line;
-
-    private String color;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity owner;
+    public String getPhoto() {
+        return photo == null ? "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y" : photo;
+    }
 }

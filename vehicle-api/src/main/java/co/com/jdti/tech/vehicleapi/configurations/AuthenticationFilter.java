@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import co.com.jdti.tech.vehicleapi.helpers.TokenHelper;
 import co.com.jdti.tech.vehicleapi.utils.ConstantsConfiguration;
-import co.com.jdti.tech.vehicleapi.utils.UserDto;
+import co.com.jdti.tech.vehicleapi.dtos.UserDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

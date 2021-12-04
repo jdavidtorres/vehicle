@@ -1,4 +1,4 @@
-package co.com.jdti.tech.vehicleapi.utils;
+package co.com.jdti.tech.vehicleapi.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
