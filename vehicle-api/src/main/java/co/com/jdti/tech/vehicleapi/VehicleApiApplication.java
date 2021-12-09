@@ -4,18 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import co.com.jdti.tech.vehicleapi.enums.UserType;
 import co.com.jdti.tech.vehicleapi.model.entities.Brand;
 import co.com.jdti.tech.vehicleapi.model.entities.DocumentType;
 import co.com.jdti.tech.vehicleapi.model.entities.Procedure;
+import co.com.jdti.tech.vehicleapi.model.entities.Role;
 import co.com.jdti.tech.vehicleapi.model.entities.UserEntity;
 import co.com.jdti.tech.vehicleapi.model.entities.VehicleType;
 import co.com.jdti.tech.vehicleapi.repositories.IBrandRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IDocumentTypeRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IProcedureRepository;
+import co.com.jdti.tech.vehicleapi.repositories.IRoleRepository;
+import co.com.jdti.tech.vehicleapi.repositories.IUserRepository;
 import co.com.jdti.tech.vehicleapi.repositories.IVehicleTypeRepository;
-import co.com.jdti.tech.vehicleapi.services.IUserServices;
 
 @SpringBootApplication
 public class VehicleApiApplication implements CommandLineRunner {
@@ -33,7 +37,18 @@ public class VehicleApiApplication implements CommandLineRunner {
 	private IProcedureRepository iProcedureRepository;
 
 	@Autowired
-	private IUserServices iUserServices;
+	private IUserRepository iUserRepository;
+
+	@Autowired
+	private IRoleRepository iRoleRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(VehicleApiApplication.class, args);
@@ -90,19 +105,15 @@ public class VehicleApiApplication implements CommandLineRunner {
 		iProcedureRepository.save(Procedure.builder().description("Kit de arrastre").price(1000000.0).build());
 		iProcedureRepository.save(Procedure.builder().description("Accesorios").price(1000.0).build());
 
-		iUserServices.checkRoleUser(UserType.Admin.name());
-		iUserServices.checkRoleUser(UserType.User.name());
+		Role adminRole = iRoleRepository.save(Role.builder().roleName(UserType.Admin.name()).build());
+		Role userRole = iRoleRepository.save(Role.builder().roleName(UserType.User.name()).build());
 
-		UserEntity userAdmin = iUserServices.addUser(
-				UserEntity.builder().firstName("Juan").lastName("Perez").email("juan@yopmail.com").password("12345")
-						.documentType(cc).documentNumber("documentNumber").address("Avenue 745").build());
+		iUserRepository.save(UserEntity.builder().firstName("Juan").lastName("Perez").documentType(cc)
+				.documentNumber("123456789").email("juan@yopmail.com").password(passwordEncoder.encode("12345"))
+				.address("Avenue 745").role(adminRole).build());
 
-		iUserServices.addUserToRole(userAdmin, UserType.Admin.name());
-
-		UserEntity userUser = iUserServices.addUser(
-				UserEntity.builder().firstName("Luis").lastName("Fulano").email("luis@yopmail.com").password("1234567")
-						.documentType(cc).documentNumber("documentNumber").address("Avenue 747").build());
-
-		iUserServices.addUserToRole(userUser, UserType.User.name());
+		iUserRepository.save(UserEntity.builder().firstName("Juan").lastName("Perez").documentType(cc)
+				.documentNumber("123456789").email("luis@yopmail.com").password(passwordEncoder.encode("12345"))
+				.address("Avenue 745").role(userRole).build());
 	}
 }

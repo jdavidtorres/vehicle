@@ -27,7 +27,7 @@ public class UserServicesImpl implements IUserServices, UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userLoaded = iUserRepository.findByEmail(username);
+        var userLoaded = iUserRepository.findByEmail(username);
         return new User(userLoaded.getEmail(), userLoaded.getPassword(), true, true, true, true, new ArrayList<>());
     }
 
