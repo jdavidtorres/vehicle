@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.addFilter(new AuthenticationFilter(authenticationManager()))
                 .addFilter(new AuthorizationFilter(authenticationManager())).csrf().disable().cors().disable()
-                .authorizeRequests().antMatchers("/user/**", "/login", "/swagger-ui.html",
+                .authorizeRequests().antMatchers("/users/**", "/login", "/swagger-ui.html",
                         "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs", "/v3/api-docs/**")
                 .permitAll().anyRequest()
                 .authenticated().and()
