@@ -1,7 +1,6 @@
 package co.com.jdti.tech.vehicleapi.controllers;
 
-import co.com.jdti.tech.vehicleapi.model.entities.Brand;
-import co.com.jdti.tech.vehicleapi.services.BrandServices;
+import co.com.jdti.tech.vehicleapi.model.entities.UserEntity;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -15,16 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin({"*"})
-@RequestMapping("/brands")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @SecurityScheme(type = SecuritySchemeType.HTTP, scheme = "Bearer", name = "Authorization", bearerFormat = "JWT")
 @SecurityRequirement(name = "Authorization")
-public class BrandController {
-
-    private final BrandServices brandService;
+public class UserController {
 
     @PostMapping
-    public ResponseEntity<Brand> saveBrand(@RequestBody Brand brand) {
-        return ResponseEntity.ok(brandService.save(brand));
+    public ResponseEntity<UserEntity> saveBrand(@RequestBody UserEntity user) {
+        return ResponseEntity.ok(null);
     }
 }

@@ -1,9 +1,11 @@
 package co.com.jdti.tech.vehicleapi.controllers;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
+import co.com.jdti.tech.vehicleapi.model.entities.VehicleType;
+import co.com.jdti.tech.vehicleapi.services.VehicleTypeServices;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,14 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.jdti.tech.vehicleapi.model.entities.VehicleType;
-import co.com.jdti.tech.vehicleapi.services.VehicleTypeServices;
-import lombok.RequiredArgsConstructor;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin({ "*" })
 @RequestMapping("/vehicle-type")
 @RequiredArgsConstructor
+@SecurityScheme(type = SecuritySchemeType.HTTP, scheme = "Bearer", name = "Authorization", bearerFormat = "JWT")
+@SecurityRequirement(name = "Authorization")
 public class VehicleTypeController {
 
     private final VehicleTypeServices vehicleTypeServices;

@@ -1,5 +1,8 @@
 package co.com.jdti.tech.vehicleapi.controllers;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin({ "*" })
 @RequestMapping("/procedures")
 @RequiredArgsConstructor
+@SecurityScheme(type = SecuritySchemeType.HTTP, scheme = "Bearer", name = "Authorization", bearerFormat = "JWT")
+@SecurityRequirement(name = "Authorization")
 public class ProcedureController {
 
     @PostMapping
