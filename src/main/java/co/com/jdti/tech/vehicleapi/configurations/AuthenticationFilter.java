@@ -60,19 +60,21 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 authenticationToken.setAuthenticated(false);
                 log.error("JsonParseException");
                 e.printStackTrace();
+                return authenticationManager.authenticate(authenticationToken);
             } catch (JsonMappingException e) {
                 authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
                 authenticationToken.setAuthenticated(false);
                 log.error("JsonMappingException");
                 e.printStackTrace();
+                return authenticationManager.authenticate(authenticationToken);
             } catch (IOException e) {
                 authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
                 authenticationToken.setAuthenticated(false);
                 log.error("IOException");
                 e.printStackTrace();
+                return authenticationManager.authenticate(authenticationToken);
             }
         }
-        return null;
     }
 
     @Override
